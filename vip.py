@@ -18,7 +18,7 @@ try:
     import pytesseract
 except:
     system('pip install pytesseract')
-#1788351105:AAHfYx9EsreTguPB1PUkDzHZ1ZhZz5m-nuc
+# 1788351105:AAHfYx9EsreTguPB1PUkDzHZ1ZhZz5m-nuc
 try:
     import PIL
 except:
@@ -52,7 +52,7 @@ try:
     from selenium import webdriver
 except:
     system('pip install selenium')
-#import fitz
+# import fitz
 try:
     import telebot
 except:
@@ -64,15 +64,15 @@ import requests
 from PIL import Image
 import io
 import pytesseract
-#from wand.image import Image as wi
+# from wand.image import Image as wi
 from pptx import Presentation
 from docx import Document
 import glob
 import requests
 import shutil
 from pptx.enum.shapes import PP_MEDIA_TYPE
-
-#pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+import subprocess
+# pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 c = []
 g = []
 d = []
@@ -84,6 +84,10 @@ r1 = requests.session()
 token = '5392900812:AAET_LLAkW4jsd6HNMKhH9fLv2Ee9G0hvoQ'
 bot = telebot.TeleBot(token)
 
+
+def pptx_to_pdf(input_path, output_path):
+    subprocess.run(["unoconv", "-f", "pdf", "-o", output_path, input_path])
+    
 
 @bot.message_handler(commands=['start'])
 def key(msg):
@@ -713,9 +717,9 @@ def any(call):
                     new_file.write(downloaded_file)
                 im = Image.open('xc1.jpg')
                 text = pytesseract.image_to_string(im)
-                #open(f'sound/{ch}.txt', 'w', encoding='utf-8').write(text)
+                # open(f'sound/{ch}.txt', 'w', encoding='utf-8').write(text)
 
-                #txt = open(f'sound/{ch}.txt', 'r', encoding='utf-8').read()
+                # txt = open(f'sound/{ch}.txt', 'r', encoding='utf-8').read()
                 gtts.gTTS(text, lang='en', slow=True).save('koky.mp3')
                 bot.send_audio(ch, open('koky.mp3', 'rb'))
             if call.data == 'n2':
@@ -727,8 +731,8 @@ def any(call):
                     new_file.write(downloaded_file)
                 im = Image.open('xc1.jpg')
                 text = pytesseract.image_to_string(im)
-                #open(f'sound/{ch}.txt', 'w', encoding='utf-8').write(text)
-                #txt = open(f'sound/{ch}.txt', 'r', encoding='utf-8').read()
+                # open(f'sound/{ch}.txt', 'w', encoding='utf-8').write(text)
+                # txt = open(f'sound/{ch}.txt', 'r', encoding='utf-8').read()
                 bot.send_message(ch, text)
             if call.data == 'n3':
                 ph = call.message.photo[2].file_id
@@ -769,7 +773,19 @@ def any(call):
                 downloaded_file = bot.download_file(file_info.file_path)
                 try:
                     x = call.message.document.file_name[-4:]
-                    if x == '.pdf' or x == '.PDF':
+                    if x == 'pptx' or x == 'PPTx':
+                        with open('koky.pptx', 'wb') as new_file:
+                            new_file.write(downloaded_file)
+                        pptx_to_pdf(output_path='koky.pdf', input_path='koky.pptx')
+                    elif x == 'docx' or x == 'DOCx':
+                        with open('koky.docx', 'wb') as new_file:
+                            new_file.write(downloaded_file)
+                        pptx_to_pdf(output_path='koky.pdf', input_path='koky.docx')
+                    else:
+                        with open('koky.pdf', 'wb') as new_file:
+                            new_file.write(downloaded_file)
+
+                    if 1 == 1:
                         if ch in h:
                             bot.send_message(ch, 'انتضر قليلا من فضلك لكي يتم التحميل 💚')
                         else:
@@ -872,8 +888,6 @@ def any(call):
                         else:
                             bot.send_message(ch, 'عذرا لم يتم ترجمة ملفك لانه ليس✳️ \npdf or pptx or docx\n')
 
-
-
                     try:
                         h.remove(ch)
                     except:
@@ -885,7 +899,19 @@ def any(call):
                 file_info = bot.get_file(call.message.document.file_id)
                 downloaded_file = bot.download_file(file_info.file_path)
                 x = call.message.document.file_name[-4:]
-                if x == '.pdf' or x == '.PDF':
+                if x == 'pptx' or x == 'PPTx':
+                    with open('koky.pptx', 'wb') as new_file:
+                        new_file.write(downloaded_file)
+                    pptx_to_pdf(output_path='koky.pdf', input_path='koky.pptx')
+                elif x == 'docx' or x == 'DOCx':
+                    with open('koky.docx', 'wb') as new_file:
+                        new_file.write(downloaded_file)
+                    pptx_to_pdf(output_path='koky.pdf', input_path='koky.docx')
+                else:
+                    with open('koky.pdf', 'wb') as new_file:
+                        new_file.write(downloaded_file)
+
+                if 1 == 1:
 
                     if ch in h:
                         bot.send_message(ch, 'انتضر قليلا من فضلك لكي يتم التحميل 💚')
@@ -909,7 +935,6 @@ def any(call):
                                 text += '|#|'
                                 pix = doc.loadPage(v).getPixmap()  # number of page
                                 output = f"{ch}.png"
-
 
                                 pix.writePNG(output)
                                 im = Image.open(output)
@@ -937,13 +962,13 @@ def any(call):
                                 z = f'----{str(page)[:7]}-------\n'
                                 document.add_picture(f'{ch}.png')
                                 document.add_paragraph(f'{z}\n')
-                                #document.add_picture(f'{ch}.png')
-                                #document.add_paragraph(f'{tran}')
+                                # document.add_picture(f'{ch}.png')
+                                # document.add_paragraph(f'{tran}')
                             document.save('Ahmed2.docx')
-                            bot.send_document(ch, open(f'Ahmed2.docx', 'rb'), caption=f'{call.message.document.file_name}\nترجمة صور داخل الملفات ')
+                            bot.send_document(ch, open(f'Ahmed2.docx', 'rb'),
+                                              caption=f'{call.message.document.file_name}\nترجمة صور داخل الملفات ')
                 else:
                     bot.answer_callback_query(call.id, f'غير متوفره الخاصية الان لملف من نوع {x} ⚛️', True)
-
 
                 try:
                     h.remove(ch)
@@ -954,7 +979,19 @@ def any(call):
                 downloaded_file = bot.download_file(file_info.file_path)
                 try:
                     x = call.message.document.file_name[-4:]
-                    if x == '.pdf' or x == '.PDF':
+                    if x == 'pptx' or x == 'PPTx':
+                        with open('koky.pptx', 'wb') as new_file:
+                            new_file.write(downloaded_file)
+                        pptx_to_pdf(output_path='koky.pdf', input_path='koky.pptx')
+                    elif x == 'docx' or x == 'DOCx':
+                        with open('koky.docx', 'wb') as new_file:
+                            new_file.write(downloaded_file)
+                        pptx_to_pdf(output_path='koky.pdf', input_path='koky.docx')
+                    else:
+                        with open('koky.pdf', 'wb') as new_file:
+                            new_file.write(downloaded_file)
+
+                    if 1 == 1:
                         if ch in h:
                             bot.send_message(ch, 'انتضر قليلا من فضلك لكي يتم التحميل 💚')
                         else:
@@ -990,7 +1027,7 @@ def any(call):
                                     xc = ''
                                     try:
                                         a1 = text.split('\n')
-                                        
+
                                         while rr < len(text.split('\n')):
                                             if a1[rr] == '' or a1[rr] == ' ':
                                                 pass
@@ -1013,14 +1050,14 @@ def any(call):
 
                                     document.add_paragraph(f'{z}\n')
 
-                            #shd = OxmlElement('w:background')
-                            #shd.set(qn('w:color'), '50D1000D100D')  # black color
-                            #shd.set(qn('w:themeColor'), 'text1')
-                            #shd.set(qn('w:themeTint'), 'F2')
+                            # shd = OxmlElement('w:background')
+                            # shd.set(qn('w:color'), '50D1000D100D')  # black color
+                            # shd.set(qn('w:themeColor'), 'text1')
+                            # shd.set(qn('w:themeTint'), 'F2')
 
-                            #document.element.insert(0,shd)
-                            #shd1 = OxmlElement('w:displayBackgroundShape')
-                            #document.settings.element.insert(0, shd1)
+                            # document.element.insert(0,shd)
+                            # shd1 = OxmlElement('w:displayBackgroundShape')
+                            # document.settings.element.insert(0, shd1)
 
                             document.save('Ahmed.docx')
                             bot.send_document(ch, open('Ahmed.docx', 'rb'), caption=call.message.document.file_name)
@@ -1054,7 +1091,7 @@ def any(call):
                                     aa = u.split('---------')
 
                                     trans = GoogleTranslator(source='en', target='ar').translate(
-                                                    text=str(aa[i]))
+                                        text=str(aa[i]))
                                     try:
                                         ss = aa[i].split('\n')
                                         ss1 = trans.split('\n')
@@ -1062,19 +1099,19 @@ def any(call):
                                         while ss2 < len(ss):
                                             document.add_paragraph(f'{ss1[ss2]}\n{ss[ss2]}\n----------------')
 
-                                            ss2+=1
+                                            ss2 += 1
                                     except:
                                         pass
 
                                     i += 1
-                                #shd = OxmlElement('w:background')
-                                #shd.set(qn('w:color'), '50D1000D100D')  # black color
-                                #shd.set(qn('w:themeColor'), 'text1')
-                                #shd.set(qn('w:themeTint'), 'F2')
+                                # shd = OxmlElement('w:background')
+                                # shd.set(qn('w:color'), '50D1000D100D')  # black color
+                                # shd.set(qn('w:themeColor'), 'text1')
+                                # shd.set(qn('w:themeTint'), 'F2')
 
-                                #document.element.insert(0, shd)
-                                #shd1 = OxmlElement('w:displayBackgroundShape')
-                                #document.settings.element.insert(0, shd1)
+                                # document.element.insert(0, shd)
+                                # shd1 = OxmlElement('w:displayBackgroundShape')
+                                # document.settings.element.insert(0, shd1)
 
                                 document.save('Ahmed.docx')
                                 bot.send_document(ch, open('Ahmed.docx', 'rb'), caption=call.message.document.file_name)
@@ -1114,9 +1151,6 @@ def any(call):
                         else:
                             bot.send_message(ch, 'عذرا لم يتم ترجمة ملفك لانه ليس✳️ \npdf or pptx or docx\n')
 
-
-
-
                     try:
                         h.remove(ch)
                     except:
@@ -1129,7 +1163,19 @@ def any(call):
                 downloaded_file = bot.download_file(file_info.file_path)
                 try:
                     x = call.message.document.file_name[-4:]
-                    if x == '.pdf' or x == '.PDF':
+                    if x == 'pptx' or x == 'PPTx':
+                        with open('koky.pptx', 'wb') as new_file:
+                            new_file.write(downloaded_file)
+                        pptx_to_pdf(output_path='koky.pdf', input_path='koky.pptx')
+                    elif x == 'docx' or x == 'DOCx':
+                        with open('koky.docx', 'wb') as new_file:
+                            new_file.write(downloaded_file)
+                        pptx_to_pdf(output_path='koky.pdf', input_path='koky.docx')
+                    else:
+                        with open('koky.pdf', 'wb') as new_file:
+                            new_file.write(downloaded_file)
+
+                    if 1 == 1:
                         if ch in h:
                             bot.send_message(ch, 'انتضر قليلا من فضلك لكي يتم التحميل 💚')
                         else:
@@ -1262,7 +1308,6 @@ def any(call):
                                         ss2 = 0
                                         ss3 = ''
                                         while ss2 < len(ss):
-
                                             ss3 += f'{ss1[ss2]}\n{ss[ss2]}\n----------------\n'
                                             ss2 += 1
 
@@ -1276,7 +1321,6 @@ def any(call):
                                     p.level = 0
                                     p.font.size = Pt(15)
 
-
                                     i += 1
                                 pptx1.save('1.pptx')
                                 bot.send_document(ch, open('1.pptx', 'rb'))
@@ -1286,7 +1330,6 @@ def any(call):
                             u = ''
                             with open('Ahmed1.docx', 'wb') as new_file:
                                 new_file.write(downloaded_file)
-
 
                             document1 = Document('Ahmed1.docx')
                             document = Document()
@@ -1385,7 +1428,6 @@ def any(call):
 
 @bot.message_handler(content_types=['photo'])
 def key(msg):
-
     ch = msg.chat.id
     if f'{ch}\n' in open('tran.txt', 'r'):
         pass
@@ -1411,7 +1453,7 @@ def key(msg):
                 bot.send_message(ch, 'يجب عليك الاشتراك في القناة اول و من ثم استخدم البوت \nلطفا💚\n@akokybot')
             else:
                 bot.send_photo(ch, str(msg).split("file_id': '")[-1][
-                :str(msg).split("file_id': '")[-1].find("', 'file_unique_id")], reply_markup=n)
+                                   :str(msg).split("file_id': '")[-1].find("', 'file_unique_id")], reply_markup=n)
         except:
             pass
 
@@ -1451,6 +1493,7 @@ def an(msg):
                 bot.send_document(ch, msg.document.file_id, reply_markup=n)
             except:
                 pass
+
 
 i = 0
 while i == 0:
