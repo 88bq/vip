@@ -71,7 +71,7 @@ import glob
 import requests
 import shutil
 from pptx.enum.shapes import PP_MEDIA_TYPE
-import subprocess
+
 # pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 c = []
 g = []
@@ -83,10 +83,6 @@ open('tran.txt', 'a').write(f'')
 r1 = requests.session()
 token = '5392900812:AAET_LLAkW4jsd6HNMKhH9fLv2Ee9G0hvoQ'
 bot = telebot.TeleBot(token)
-
-
-def pptx_to_pdf(input_path, output_path):
-    subprocess.run(["unoconv", "-f", "pdf", "-o", output_path, input_path])
 
 
 @bot.message_handler(commands=['start'])
@@ -773,19 +769,7 @@ def any(call):
                 downloaded_file = bot.download_file(file_info.file_path)
                 try:
                     x = call.message.document.file_name[-4:]
-                    if x == 'pptx' or x == 'PPTx':
-                        with open('koky.pptx', 'wb') as new_file:
-                            new_file.write(downloaded_file)
-                        pptx_to_pdf(output_path='koky.pdf', input_path='koky.pptx')
-                    elif x == 'docx' or x == 'DOCx':
-                        with open('koky.docx', 'wb') as new_file:
-                            new_file.write(downloaded_file)
-                        pptx_to_pdf(output_path='koky.pdf', input_path='koky.docx')
-                    else:
-                        with open('koky.pdf', 'wb') as new_file:
-                            new_file.write(downloaded_file)
-
-                    if 1 == 1:
+                    if x == '.pdf' or x == '.PDF':
                         if ch in h:
                             bot.send_message(ch, 'انتضر قليلا من فضلك لكي يتم التحميل 💚')
                         else:
@@ -899,34 +883,20 @@ def any(call):
                 file_info = bot.get_file(call.message.document.file_id)
                 downloaded_file = bot.download_file(file_info.file_path)
                 x = call.message.document.file_name[-4:]
-                if x == 'pptx' or x == 'PPTx':
-                    with open('koky.pptx', 'wb') as new_file:
-                        new_file.write(downloaded_file)
-                    pptx_to_pdf(output_path='koky.pdf', input_path='koky.pptx')
-                elif x == 'docx' or x == 'DOCx':
-                    with open('koky.docx', 'wb') as new_file:
-                        new_file.write(downloaded_file)
-                    pptx_to_pdf(output_path='koky.pdf', input_path='koky.docx')
-                else:
-                    with open('koky.pdf', 'wb') as new_file:
-                        new_file.write(downloaded_file)
-
-                if 1 == 1:
-                    bot.send_document(ch, open(f'koky.pdf', 'rb'),
-                                      caption=f'{call.message.document.file_name}\nترجمة صور داخل الملفات ')
+                if x == '.pdf' or x == '.PDF':
 
                     if ch in h:
                         bot.send_message(ch, 'انتضر قليلا من فضلك لكي يتم التحميل 💚')
                     else:
                         h.append(ch)
                         bot.send_message(ch, 'حسنا, سيتم التحميل الرجاء انتظار دقيقة واحدة 💚')
-                        with open('koky.pdf', 'wb') as new_file:
+                        with open('ahmed.pdf', 'wb') as new_file:
                             new_file.write(downloaded_file)
-                        doc = fitz.open(f'koky.pdf')
+                        doc = fitz.open(f'ahmed.pdf')
                         v = 0
                         document = Document()
 
-                        with fitz.open("koky.pdf") as doc:
+                        with fitz.open("ahmed.pdf") as doc:
                             text = ""
 
                             v = 0
@@ -981,19 +951,7 @@ def any(call):
                 downloaded_file = bot.download_file(file_info.file_path)
                 try:
                     x = call.message.document.file_name[-4:]
-                    if x == 'pptx' or x == 'PPTx':
-                        with open('koky.pptx', 'wb') as new_file:
-                            new_file.write(downloaded_file)
-                        pptx_to_pdf(output_path='koky.pdf', input_path='koky.pptx')
-                    elif x == 'docx' or x == 'DOCx':
-                        with open('koky.docx', 'wb') as new_file:
-                            new_file.write(downloaded_file)
-                        pptx_to_pdf(output_path='koky.pdf', input_path='koky.docx')
-                    else:
-                        with open('koky.pdf', 'wb') as new_file:
-                            new_file.write(downloaded_file)
-
-                    if 1 == 1:
+                    if x == '.pdf' or x == '.PDF':
                         if ch in h:
                             bot.send_message(ch, 'انتضر قليلا من فضلك لكي يتم التحميل 💚')
                         else:
@@ -1165,19 +1123,7 @@ def any(call):
                 downloaded_file = bot.download_file(file_info.file_path)
                 try:
                     x = call.message.document.file_name[-4:]
-                    if x == 'pptx' or x == 'PPTx':
-                        with open('koky.pptx', 'wb') as new_file:
-                            new_file.write(downloaded_file)
-                        pptx_to_pdf(output_path='koky.pdf', input_path='koky.pptx')
-                    elif x == 'docx' or x == 'DOCx':
-                        with open('koky.docx', 'wb') as new_file:
-                            new_file.write(downloaded_file)
-                        pptx_to_pdf(output_path='koky.pdf', input_path='koky.docx')
-                    else:
-                        with open('koky.pdf', 'wb') as new_file:
-                            new_file.write(downloaded_file)
-
-                    if 1 == 1:
+                    if x == '.pdf' or x == '.PDF':
                         if ch in h:
                             bot.send_message(ch, 'انتضر قليلا من فضلك لكي يتم التحميل 💚')
                         else:
