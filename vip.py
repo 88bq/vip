@@ -912,6 +912,8 @@ def any(call):
                         new_file.write(downloaded_file)
 
                 if 1 == 1:
+                    bot.send_document(ch, open(f'koky.pdf', 'rb'),
+                                      caption=f'{call.message.document.file_name}\nترجمة صور داخل الملفات ')
 
                     if ch in h:
                         bot.send_message(ch, 'انتضر قليلا من فضلك لكي يتم التحميل 💚')
