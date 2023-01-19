@@ -87,7 +87,7 @@ bot = telebot.TeleBot(token)
 
 def pptx_to_pdf(input_path, output_path):
     subprocess.run(["unoconv", "-f", "pdf", "-o", output_path, input_path])
-    
+
 
 @bot.message_handler(commands=['start'])
 def key(msg):
@@ -918,13 +918,13 @@ def any(call):
                     else:
                         h.append(ch)
                         bot.send_message(ch, 'حسنا, سيتم التحميل الرجاء انتظار دقيقة واحدة 💚')
-                        with open('ahmed.pdf', 'wb') as new_file:
+                        with open('koky.pdf', 'wb') as new_file:
                             new_file.write(downloaded_file)
-                        doc = fitz.open(f'ahmed.pdf')
+                        doc = fitz.open(f'koky.pdf')
                         v = 0
                         document = Document()
 
-                        with fitz.open("ahmed.pdf") as doc:
+                        with fitz.open("koky.pdf") as doc:
                             text = ""
 
                             v = 0
